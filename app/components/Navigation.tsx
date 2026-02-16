@@ -17,17 +17,17 @@ export default function Navigation() {
   ];
 
   const isActive = (href: string) => {
-    return pathname === href || (href === '/dashboard' && pathname === '/');
+    return pathname === href;
   };
 
   return (
-    <nav className="bg-white shadow-sm sticky top-0 z-50">
+    <nav className="sticky top-0 z-50 border-b" style={{ backgroundColor: '#FFFFFF', borderColor: '#E0DDD9' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <Link href="/" className="text-2xl font-serif font-bold kodnest-accent">
-              KodNest
+            <Link href="/" className="text-2xl font-serif font-bold" style={{ color: '#8B0000' }}>
+              JNT
             </Link>
           </div>
 
@@ -39,13 +39,19 @@ export default function Navigation() {
                 href={item.href}
                 className={`px-4 py-2 text-sm font-medium transition-colors relative ${
                   isActive(item.href)
-                    ? 'text-red-900 kodnest-accent-border'
-                    : 'text-gray-600 hover:text-gray-900'
+                    ? 'font-semibold'
+                    : ''
                 }`}
+                style={{
+                  color: isActive(item.href) ? '#8B0000' : '#666666',
+                }}
               >
                 {item.label}
                 {isActive(item.href) && (
-                  <div className="absolute bottom-0 left-0 right-0 h-1 bg-red-900"></div>
+                  <div 
+                    className="absolute bottom-0 left-0 right-0 h-1"
+                    style={{ backgroundColor: '#8B0000' }}
+                  ></div>
                 )}
               </Link>
             ))}
@@ -54,7 +60,8 @@ export default function Navigation() {
           {/* Mobile menu button */}
           <button
             onClick={() => setIsOpen(!isOpen)}
-            className="md:hidden p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100 focus:outline-none"
+            className="md:hidden p-2 rounded-md transition-colors"
+            style={{ color: '#666666' }}
           >
             <svg
               className="h-6 w-6"
@@ -82,9 +89,14 @@ export default function Navigation() {
                 onClick={() => setIsOpen(false)}
                 className={`block px-4 py-2 text-sm font-medium rounded-md transition-colors ${
                   isActive(item.href)
-                    ? 'bg-red-50 text-red-900 kodnest-accent-border border-l-4 border-red-900'
-                    : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
+                    ? 'border-l-4 pl-3'
+                    : ''
                 }`}
+                style={{
+                  backgroundColor: isActive(item.href) ? '#F9F8F6' : 'transparent',
+                  color: isActive(item.href) ? '#8B0000' : '#666666',
+                  borderColor: isActive(item.href) ? '#8B0000' : 'transparent',
+                }}
               >
                 {item.label}
               </Link>

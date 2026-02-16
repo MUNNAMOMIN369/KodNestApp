@@ -1,5 +1,5 @@
-import PlaceholderPage from './components/PlaceholderPage';
+import LandingPage from './components/LandingPage';
 
 export default function Home() {
-  return <PlaceholderPage title="Job Notification Tracker" />;
+  return <LandingPage />;
 }
