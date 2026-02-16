@@ -4,6 +4,7 @@ import { useState } from 'react';
 
 interface FilterBarProps {
   onFilterChange: (filters: FilterState) => void;
+  hasPreferences?: boolean;
 }
 
 export interface FilterState {
@@ -19,9 +20,13 @@ const LOCATIONS = ['All', 'Bengaluru', 'Hyderabad', 'Pune', 'Delhi', 'Noida', 'G
 const MODES = ['All', 'Remote', 'Hybrid', 'Onsite'];
 const EXPERIENCES = ['All', 'Fresher', '0-1', '1-3', '3-5', '5+'];
 const SOURCES = ['All', 'LinkedIn', 'Naukri', 'Indeed'];
-const SORTS = ['Latest', 'Oldest', 'Salary High to Low', 'Salary Low to High'];
 
-export default function FilterBar({ onFilterChange }: FilterBarProps) {
+const getSortOptions = (hasPreferences: boolean = false) => {
+  const base = ['Latest', 'Oldest', 'Salary High to Low', 'Salary Low to High'];
+  return hasPreferences ? ['Match Score', ...base] : base;
+};
+
+export default function FilterBar({ onFilterChange, hasPreferences = false }: FilterBarProps) {
   const [filters, setFilters] = useState<FilterState>({
     keyword: '',
     location: 'All',
@@ -52,9 +57,8 @@ export default function FilterBar({ onFilterChange }: FilterBarProps) {
 
   return (
     <div className="bg-white p-6 rounded-lg mb-8 space-y-4" style={{ borderColor: '#E0DDD9', border: '1px solid #E0DDD9' }}>
-      {/* Keyword Search */}
       <div>
-        <label 
+        <label
           className="block text-sm font-medium mb-2"
           style={{ color: '#333333' }}
         >
@@ -70,9 +74,7 @@ export default function FilterBar({ onFilterChange }: FilterBarProps) {
         />
       </div>
 
-      {/* Dropdowns Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
-        {/* Location */}
         <div>
           <label 
             className="block text-sm font-medium mb-2"
@@ -94,9 +96,8 @@ export default function FilterBar({ onFilterChange }: FilterBarProps) {
           </select>
         </div>
 
-        {/* Mode */}
         <div>
-          <label 
+          <label
             className="block text-sm font-medium mb-2"
             style={{ color: '#333333' }}
           >
@@ -116,9 +117,8 @@ export default function FilterBar({ onFilterChange }: FilterBarProps) {
           </select>
         </div>
 
-        {/* Experience */}
         <div>
-          <label 
+          <label
             className="block text-sm font-medium mb-2"
             style={{ color: '#333333' }}
           >
@@ -138,9 +138,8 @@ export default function FilterBar({ onFilterChange }: FilterBarProps) {
           </select>
         </div>
 
-        {/* Source */}
         <div>
-          <label 
+          <label
             className="block text-sm font-medium mb-2"
             style={{ color: '#333333' }}
           >
@@ -160,9 +159,8 @@ export default function FilterBar({ onFilterChange }: FilterBarProps) {
           </select>
         </div>
 
-        {/* Sort */}
         <div>
-          <label 
+          <label
             className="block text-sm font-medium mb-2"
             style={{ color: '#333333' }}
           >
@@ -174,7 +172,7 @@ export default function FilterBar({ onFilterChange }: FilterBarProps) {
             className="w-full px-3 py-2 border rounded-lg font-light focus:outline-none"
             style={{ borderColor: '#E0DDD9', color: '#666666' }}
           >
-            {SORTS.map((sort) => (
+            {getSortOptions(hasPreferences).map((sort) => (
               <option key={sort} value={sort}>
                 {sort}
               </option>
@@ -183,12 +181,11 @@ export default function FilterBar({ onFilterChange }: FilterBarProps) {
         </div>
       </div>
 
-      {/* Reset Button */}
       <div className="flex justify-end">
         <button
           onClick={handleReset}
           className="px-4 py-2 text-sm font-medium rounded-lg transition-colors"
-          style={{ 
+          style={{
             backgroundColor: '#F0EDEA',
             color: '#8B0000'
           }}
